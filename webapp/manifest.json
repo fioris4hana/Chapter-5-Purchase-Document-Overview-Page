@@ -1,0 +1,161 @@
+{
+	"_version": "1.7.0",
+	"start_url": "start.html",
+	"sap.app": {
+		"id": "${project.artifactId}",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "${project.version}"
+		},
+		"title": "{{app_title}}",
+		"description": "{{app_description}}",
+		"ach": "MM-PUR",
+		"resources": "resources.json",
+		"dataSources": {
+			"Z_PURCHDOCSOVP_SRV": {
+				"uri": "/sap/opu/odata/sap/Z_PURCHDOCSOVP_SRV/",
+				"type": "OData",
+				"settings": {
+					"annotations": [
+						"Z_PURCHDOCSOVP_ANNO_MDL"
+					],
+					"localUri": "localService/Z_PURCHDOCSOVP_SRV/metadata.xml"
+				}
+			},
+			"Z_PURCHDOCSOVP_ANNO_MDL": {
+				"uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='Z_PURCHDOCSOVP_ANNO_MDL',Version='0001')/$value/",
+				"type": "ODataAnnotation",
+				"settings": {
+					"localUri": "localService/Z_PURCHDOCSOVP_SRV/Z_PURCHDOCSOVP_ANNO_MDL.xml"
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "OVP.smartovptemplate",
+			"version": "1.41.1"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_belize"
+		]
+	},
+	"sap.ui5": {
+		"dependencies": {
+			"minUI5Version": "${sap.ui5.dist.version}",
+			"libs": {
+				"sap.ovp": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"@i18n": {
+				"preload": true,
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"Z_PURCHDOCSOVP_SRV": {
+				"dataSource": "Z_PURCHDOCSOVP_SRV",
+				"settings": {
+					"defaultCountMode": "Inline"
+				}
+			}
+		},
+		"extends": {
+			"extensions": {}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.fiori": {
+		"registrationIds": [],
+		"archeType": "analytical"
+	},
+	"sap.ovp": {
+		"globalFilterModel": "Z_PURCHDOCSOVP_SRV",
+		"globalFilterEntityType": "Z_C_PURCHASEDOCUMENTFILTERSOVPType",
+		"containerLayout": "resizable",
+		"enableLiveFilter": true,
+		"considerAnalyticalParameters": true,
+		"cards": {
+			"card00": {
+				"model": "Z_PURCHDOCSOVP_SRV",
+				"template": "sap.ovp.cards.charts.analytical",
+				"settings": {
+					"title": "{{card00_title}}",
+					"subTitle": "{{card00_subTitle}}",
+					"entitySet": "Z_C_PurchaseDocumentOVP",
+					"tabs": [
+						{
+							"value": "Priority",
+							"chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#ByPurchaseDocumentPriority",
+							"identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification",
+							"navigation": "dataPointNav"
+						},
+						{
+							"value": "Status",
+							"chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#ByPurchaseDocumentStatus",
+							"identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification",
+							"navigation": "dataPointNav"
+						}
+					]
+				}
+			},
+			"card01": {
+				"model": "Z_PURCHDOCSOVP_SRV",
+				"template": "sap.ovp.cards.list",
+				"settings": {
+					"title": "{{card01_title}}",
+					"subTitle": "{{card01_subTitle}}",
+					"entitySet": "Z_C_PurchaseDocsforApprovalOVP",
+					"listType": "extended",
+					"listFlavor": "standard",
+					"sortBy": "OverallPrice",
+					"sortOrder": "descending",
+					"addODataSelect": false,
+					"identificationAnnotationPath": "com.sap.vocabularies.UI.v1.Identification",
+					"annotationPath": "com.sap.vocabularies.UI.v1.LineItem"
+				}
+			},
+			"card02": {
+				"model": "Z_PURCHDOCSOVP_SRV",
+				"template": "sap.ovp.cards.list",
+				"settings": {
+					"title": "{{card02_title}}",
+					"subTitle": "{{card02_subTitle}}",
+					"entitySet": "Z_C_PurchaseDocBudgetOVP",
+					"listType": "extended",
+					"listFlavor": "bar",
+					"addODataSelect": false,
+					"annotationPath": "com.sap.vocabularies.UI.v1.LineItem"
+				}
+			},
+			"card03": {
+				"model": "Z_PURCHDOCSOVP_SRV",
+				"template": "sap.ovp.cards.table",
+				"settings": {
+					"title": "{{card03_title}}",
+					"subTitle": "{{card03_subTitle}}",
+					"entitySet": "Z_C_PurchaseDocumentPendingOVP",
+					"addODataSelect": false,
+					"annotationPath": "com.sap.vocabularies.UI.v1.LineItem"
+				}
+			}
+		}
+	}
+}
